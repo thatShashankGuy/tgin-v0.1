@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Socket IO Demo Landing Page</title>
+    <style>
+      .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border: 2px solid black;
+        padding: 20px;
+        box-sizing: border-box;
+        max-width: 700px;
+        margin: 0 auto;
+      }
+    
+      h1, h3, p {
+        font-family: monospace;
+      }
+    
+      textarea {
+        background-color: black;
+        color: white;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Welcome to bsicp🦑</h1>
+      <p> 🛬 Landing Page . Thank you for visiting! 🛫 </p>
+      <section>
+        <h3>Send Message Board🪬</h3>
+        <br />
+        <br />
+        <form id="form" action="">
+          <textarea id="in" style="width: 269px; height: 79px;"></textarea>
+          <button id="send" type="submit">send</button>
+        </form>
+      </section>
+      <br /><br />
+      <section id="console-section">
+        <h3>Read Message Board 📺</h3>
+        <br />
+        <br />
+      </section>
+    </div>
+  </body>
+
+  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+  <script>
+    // there seems to be a mistake in the document where it intiliaze the io => io.on instead of socket.on
+
+    let socket = io();
+    let messages = document.getElementById("mess");
+    let form = document.getElementById("form");
+    let input = document.getElementById("in");
+    function createConsoleAreas(log) {
+      let textarea = document.createElement("textarea");
+      let linebreak = document.createElement("br")
+      textarea.setAttribute("disabled", "true");
+      textarea.className = "console";
+      textarea.value = log;
+      
+      let sec = document.getElementById("console-section");
+      sec.appendChild(textarea);
+      sec.appendChild(linebreak)
+    }
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (input.value) {
+        socket.emit("chat message", input.value);
+        input.value = "";
+      }
+    });
+
+    socket.on("chat message", function (msg) {
+      createConsoleAreas(msg)
+    });
+  </script>
+</html>
