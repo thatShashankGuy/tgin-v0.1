@@ -28,7 +28,7 @@
   </head>
   <body>
     <div class="container">
-      <h1>Welcome to bsicp🦑</h1>
+      <h1>🦧Welcome to bsicp🦑</h1>
       <p> 🛬 Landing Page . Thank you for visiting! 🛫 </p>
       <section>
         <h3>Send Message Board🪬</h3>
@@ -51,7 +51,14 @@
   <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
   <script>
     // there seems to be a mistake in the document where it intiliaze the io => io.on instead of socket.on
-
+    let avatar = "🦧"
+    function toggleavatar(){
+      if(avatar !== "🦑"){
+        avatar = "🦑"
+      }else{
+        avatar = "🦧"
+      }
+    }
     let socket = io();
     let messages = document.getElementById("mess");
     let form = document.getElementById("form");
@@ -76,7 +83,8 @@
     });
 
     socket.on("chat message", function (msg) {
-      createConsoleAreas(msg)
+      toggleavatar();
+      createConsoleAreas(avatar + ": " + msg)
     });
   </script>
 </html>
