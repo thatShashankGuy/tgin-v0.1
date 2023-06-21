@@ -1,2 +1,4 @@
 **/node_modules
 rando-code
+**/.env
+**/database
